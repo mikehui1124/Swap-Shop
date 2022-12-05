@@ -6,54 +6,60 @@ const typeDefs = gql`
     name: String
   }
 
-  type Product {
+  type Item {
     _id: ID
     name: String
     description: String
-    image: String
-    quantity: Int
-    price: Float
+    image: String   
+    owner: User 
     category: Category
+    swapDate: String
   }
 
-  type Order {
+  type Message {
     _id: ID
-    purchaseDate: String
-    products: [Product]
+    itemRequest: Item
+    itemOffer: Item
+    sender: User
+    receiver: User
+    isAgree: Boolean 
+    isClosed: Boolean
+    replyMessage: String 
   }
 
   type User {
     _id: ID
-    firstName: String
-    lastName: String
-    email: String
-    orders: [Order]
-  }
-
-  type Checkout {
-    session: ID
+    name: String    
+    email: String    
   }
 
   type Auth {
-    token: ID
+    token: ID!
     user: User
   }
 
   type Query {
     categories: [Category]
-    products(category: ID, name: String): [Product]
-    product(_id: ID!): Product
-    user: User
-    order(_id: ID!): Order
-    checkout(products: [ID]!): Checkout
+    items(category: ID, name: String): [Item]
+    item(_id: ID!): Item
+
+    messageSender(sender: ID): [Message]
+    messageReceiver(receiver: ID): [Message]
+    me: User    
+   
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    addUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    addMessage(sender: ID, receiver: ID, itemRequest: ID, itemOffer: ID ): Message
+    updateMessage(_id: ID, isAgree: Boolean, isClosed: Boolean, replyMessage: String): Message
+
+    addItem(name: String, owner: ID, category: ID, image: String, description: String ): Item
+    updateItem(_id: ID, name: String, category: ID, image: String, description: String): Item
+    removeItem(_id: ID): Item
+    changeItemOwner(_id: ID, owner: ID ): Item   
+  
   }
 `;
 
