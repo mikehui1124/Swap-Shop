@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('./User');
 
 const { Schema } = mongoose;
 
@@ -14,10 +15,10 @@ const itemSchema = new Schema({
   image: {
     type: String
   },
-  quantity: {
-    type: Number,
-    min: 0,
-    default: 1
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   category: {
     type: Schema.Types.ObjectId,
@@ -25,8 +26,8 @@ const itemSchema = new Schema({
     required: true
   },
   swapDate: {
-    type: Date,
-    default: Date.now
+    type: Date
+    
   }
 
 });

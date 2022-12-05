@@ -1,95 +1,67 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Product, Category, Order } = require('../models');
+const { User, Item, Category, Message } = require('../models');
 const { signToken } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+//const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
   Query: {
     categories: async () => {
       return await Category.find();
     },
-    products: async (parent, { category, name }) => {
+
+    items: async (parent, { category, name }) => {
       const params = {};
 
       if (category) {
         params.category = category;
       }
-
       if (name) {
         params.name = {
           $regex: name
         };
       }
+      const items = await Item.find(params).populate('category').populate('owner');
+      return items;
+    },
 
-      return await Product.find(params).populate('category');
+    item: async (parent, { _id }) => {
+      return await Item.findById(_id).populate('category').populate('owner');
+
     },
-    product: async (parent, { _id }) => {
-      return await Product.findById(_id).populate('category');
+
+    messageSender: async (parent, { _id }) => {
+      return await Message.find({sender: _id}).populate('itemRequest').populate('itemOffer').populate('receiver');
+
     },
-    user: async (parent, args, context) => {
+
+    messageReceiver: async (parent, { _id }) => {
+      return await Message.find({receiver: _id}).populate('itemRequest').populate('itemOffer').populate('sender');
+
+    },
+
+    me: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category'
-        });
-
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+        const user = await User.findById(context.user._id).populate('items');    
 
         return user;
       }
 
       throw new AuthenticationError('Not logged in');
     },
-    order: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category'
-        });
+    // order: async (parent, { _id }, context) => {
+    //   if (context.user) {
+    //     const user = await User.findById(context.user._id).populate({
+    //       path: 'orders.products',
+    //       populate: 'category'
+    //     });
 
-        return user.orders.id(_id);
-      }
+    //     return user.orders.id(_id);
+    //   }
 
-      throw new AuthenticationError('Not logged in');
-    },
-    // very complex endpoint
-    checkout: async (parent, args, context) => {
-      const url = new URL(context.headers.referer).origin;
-      const order = new Order({ products: args.products });
-      const line_items = [];
-
-      const { products } = await order.populate('products');
-
-      for (let i = 0; i < products.length; i++) {
-        const product = await stripe.products.create({
-          name: products[i].name,
-          description: products[i].description,
-          images: [`${url}/images/${products[i].image}`]
-        });
-
-        const price = await stripe.prices.create({
-          product: product.id,
-          unit_amount: products[i].price * 100,
-          currency: 'usd',
-        });
-
-        line_items.push({
-          price: price.id,
-          quantity: 1
-        });
-      }
-
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items,
-        mode: 'payment',
-        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`
-      });
-
-      return { session: session.id };
-    }
+    //   throw new AuthenticationError('Not logged in');
+    // },    
   },
+
   Mutation: {
     addUser: async (parent, args) => {
       const user = await User.create(args);
@@ -97,31 +69,6 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
-    },
-    addOrder: async (parent, { products }, context) => {
-      console.log(context);
-      if (context.user) {
-        // create new Order obj contains an arry of products
-        const order = new Order({ products });
-
-        await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
-
-        return order;
-      }
-
-      throw new AuthenticationError('Not logged in');
-    },
-    updateUser: async (parent, args, context) => {
-      if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-      }
-
-      throw new AuthenticationError('Not logged in');
-    },
-    updateProduct: async (parent, { _id, quantity }) => {
-      const decrement = Math.abs(quantity) * -1;
-// return 'quantity' by 'quantity checkout by user'
-      return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
@@ -139,7 +86,67 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
-    }
+    },
+    
+    addItem: async (parent, args) => {
+               
+        const newItem = await Item.create(args); 
+        return newItem;      
+    },
+    removeItem: async (parent, args) => {
+                
+      const cutItem = await Item.findByIdAndDelete(args._id); 
+      return cutItem;      
+    },
+
+    updateItem: async (parent, args) => {              
+      
+      const editItem = await Item.findByIdAndUpdate({_id: args._id},
+        { name: args.name,           
+          category: args.category,
+          image: args.image, 
+          description: args.description
+        }); 
+      return editItem;      
+    },
+
+    changeItemOwner: async (parent, args) => {              
+      
+      const changeOwner = await Item.findByIdAndUpdate({_id: args._id},
+        { owner: args.owner}); 
+
+      return changeOwner;      
+    },
+
+    addMessage: async (parent, args) => {
+          
+      const message = await Message.create(args); 
+      return message;      
+    },
+
+    updateMessage: async (parent, args) => {
+            
+      const editMessage = await Message.findByIdAndUpdate({_id: args._id},
+        { isAgree: args.isAgree,
+          isClosed: args.isClosed,
+          replyMessage: args.replyMessage
+        }); 
+
+      return editMessage;      
+    },    
+    // addOrder: async (parent, { products }, context) => {
+    //   console.log(context);
+    //   if (context.user) {
+    //     // create new Order obj contains an arry of products
+    //     const order = new Order({ products });
+
+    //     await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
+
+    //     return order;
+    //   }
+
+    //   throw new AuthenticationError('Not logged in');
+    // },  
   }
 };
 
