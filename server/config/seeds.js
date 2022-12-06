@@ -4,7 +4,7 @@ const { User, Item, Category } = require("../models");
 db.once("open", async () => {
   await Category.deleteMany();
 
-  const categories = await Category.insertMany([
+  const categories = await Category.create([
     { name: "Household" },
     { name: "Electronics" },
     { name: "Traders" },
@@ -14,7 +14,7 @@ db.once("open", async () => {
 
   await User.deleteMany();
 
-  const users = await User.insertMany([
+  const users = await User.create([
       {
         name: "Pamela Washington",
         email: "pamela@testmail.com",
@@ -52,7 +52,7 @@ db.once("open", async () => {
 
   await Item.deleteMany();
 
-  const items = await Item.insertMany([
+  const items = await Item.create([
     {
       name: "Air Fryer",
       description:
