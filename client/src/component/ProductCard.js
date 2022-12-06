@@ -11,7 +11,7 @@ export default class ProductCard extends Component {
     render(){
         return (
             <Card>
-                <Image src={this.props.product.photos} wrapped ui={false} />
+                <Image src={'./images/' + this.props.product.image} wrapped ui={false} />
                 <Card.Content>
                 <Card.Header>Product Name:  {this.props.product.productName}</Card.Header>
                 <Card.Meta>
@@ -24,7 +24,7 @@ export default class ProductCard extends Component {
                 <Card.Content extra>
                 <a>
                     <Icon name='user' />
-                    Owner UserName :{this.props.product.userName}
+                    Owner UserName :{this.props.product.owner.name}
                 </a>
                 </Card.Content>
                 <button onClick={this.swapProduct}>Swap this Product</button>

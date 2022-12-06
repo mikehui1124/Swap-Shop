@@ -1,41 +1,40 @@
-import React, { Component } from 'react';
+import { useQuery } from '@apollo/client';
+import React, { useEffect } from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
 import ProductCard from './ProductCard';
+import { QUERY_ITEMS } from '../utils/queries';
 
-export default class ProductCategory extends Component {
+export default function ProductCategory(props) {
 
-    renderProductCard(currentProduct){
-        return  <ProductCard key={currentProduct.key} product={currentProduct}></ProductCard>;
-    }
+    const {category} = props;
+    const {loading, error, data} = useQuery(QUERY_ITEMS, { variables:[category._id]});
 
-    render() {
-        const products=[{
-            key: "1",
-            userName:"abc001",
-            productName:"I-phone",
-            description:'It is a brand-new Iphone 6',
-            photos:'./assets/smartphone-call.png'
-            },
-            {
-            key: "2",
-            userName:"abc002",
-            productName:"Printer",
-            description:'This is fully functional colour printer',
-            photos:'./assets/smartphone-call.png'    
-        }];
+    /*
+    useEffect(() => {
+        if(loading){
+            console.log('loading... product list');
+        }
 
-        let cards = [];
-        products.forEach(item => {
-            cards.push(this.renderProductCard(item));
+        if(error){
+            console.error(error);
+        }
+    });
+    */
+   
+    let cards = [];
+    if(data){
+        data.items.forEach(item => {
+            cards.push(<ProductCard key={item._id} product={item}></ProductCard>);
         });
-
-        return (
-            <div>
-                <p>{this.props.categoryName}</p>
-                <Card.Group>
-                {cards}
-                </Card.Group>
-            </div>
-        );
     }
+
+    return (
+        <div>
+            <p>{category.name}</p>
+            <Card.Group>
+            {cards}
+            </Card.Group>
+        </div>
+    );
+
 }
