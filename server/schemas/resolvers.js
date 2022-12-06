@@ -77,7 +77,7 @@ const resolvers = {
         throw new AuthenticationError('Incorrect credentials');
       }
       // check user.password record against 'password' from login
-      const correctPw = await user.isCorrectPassword(password);
+       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
