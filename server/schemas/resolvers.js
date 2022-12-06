@@ -41,25 +41,14 @@ const resolvers = {
 
     me: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate('items');    
+        const user = await User.findById(context.user._id);    
 
         return user;
       }
 
       throw new AuthenticationError('Not logged in');
     },
-    // order: async (parent, { _id }, context) => {
-    //   if (context.user) {
-    //     const user = await User.findById(context.user._id).populate({
-    //       path: 'orders.products',
-    //       populate: 'category'
-    //     });
-
-    //     return user.orders.id(_id);
-    //   }
-
-    //   throw new AuthenticationError('Not logged in');
-    // },    
+     
   },
 
   Mutation: {
@@ -93,6 +82,7 @@ const resolvers = {
         const newItem = await Item.create(args); 
         return newItem;      
     },
+
     removeItem: async (parent, args) => {
                 
       const cutItem = await Item.findByIdAndDelete(args._id); 
