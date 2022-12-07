@@ -10,6 +10,7 @@ export default function ProductCard(props) {
     const swapProduct = (e) => {
         console.log('Swap the product:'+product.name);
         console.log('hardcode loggedIn');
+        console.log(product);
         //call graphQL with this.props.product
         let tempauth=true;
         //check if it is login first
@@ -20,8 +21,10 @@ export default function ProductCard(props) {
             navigate("/SwapProduct",
             {   
                 state: {
+                productId: product._id,
                 productName: product.name ,
                 productOwner: product.owner.name,
+                productOwnerId:product.owner._id,
                 }
               });
         }

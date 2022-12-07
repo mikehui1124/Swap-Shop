@@ -8,13 +8,15 @@ export default function SwapProduct() {
     console.log(location.state);
     
     let productName = location.state.productName;
-    let ownerName =location.state.productOwner
-    console.log(productName, ownerName);
+    let ownerName =location.state.productOwner;
+    let productId =location.state.productId;
+    let productOwnerId =location.state.productOwnerId;
+    console.log(productName, ownerName,productId,productOwnerId);
 
   return (
     <section>
       <h2>Swap Product Request Form</h2>
-      <SwapProductForm productName={productName} productOwner={ownerName}/>
+      <SwapProductForm productName={productName} productOwner={ownerName} productOwnerId={productOwnerId} productId={productId}/>
     </section>
 
   );
