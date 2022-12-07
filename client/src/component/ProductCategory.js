@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
 import ProductCard from './ProductCard';
+import RequestForm from './RequestForm';
 
 export default class ProductCategory extends Component {
 
@@ -24,6 +25,13 @@ export default class ProductCategory extends Component {
             photos:'./assets/smartphone-call.png'    
         }];
 
+        const details = {
+            requestItem: "i-phone",
+            itemOwner: "John",
+            requester: "David",
+            category: "6390dc04d55c3c4d95185943"
+        }
+
         let cards = [];
         products.forEach(item => {
             cards.push(this.renderProductCard(item));
@@ -35,6 +43,7 @@ export default class ProductCategory extends Component {
                 <Card.Group>
                 {cards}
                 </Card.Group>
+                <RequestForm requestDetail = {details}/>
             </div>
         );
     }
