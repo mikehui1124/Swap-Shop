@@ -8,7 +8,7 @@ export default function ProductCard(props) {
     const navigate = useNavigate();
 
     const swapProduct = (e) => {
-        console.log('Swap the product:'+product.productName);
+        console.log('Swap the product:'+product.name);
         console.log('hardcode loggedIn');
         //call graphQL with this.props.product
         let tempauth=true;
@@ -16,7 +16,14 @@ export default function ProductCard(props) {
         //if (Auth.loggedIn())
         if (tempauth){
             //if yes go to swapProductForm
-            navigate("/SwapProduct");
+            console.log(product.name + product.owner.name);
+            navigate("/SwapProduct",
+            {   
+                state: {
+                productName: product.name ,
+                productOwner: product.owner.name,
+                }
+              });
         }
         else {
             alert('Please login before swap product');
@@ -28,7 +35,7 @@ export default function ProductCard(props) {
         <Card>
             <Image src={'./images/' + product.image} wrapped ui={false} />
             <Card.Content>
-            <Card.Header>Product Name:  {product.productName}</Card.Header>
+            <Card.Header>Product Name:  {product.name}</Card.Header>
             <Card.Meta>
                 <span className='date'></span>
             </Card.Meta>

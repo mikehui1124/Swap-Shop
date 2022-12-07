@@ -8,18 +8,6 @@ export default function ProductCategory(props) {
 
     const {category} = props;
     const {loading, error, data} = useQuery(QUERY_ITEMS, { variables:[category._id]});
-
-    /*
-    useEffect(() => {
-        if(loading){
-            console.log('loading... product list');
-        }
-
-        if(error){
-            console.error(error);
-        }
-    });
-    */
    
     let cards = [];
     if(data){
