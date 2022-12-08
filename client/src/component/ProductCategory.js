@@ -2,7 +2,9 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect } from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
 import ProductCard from './ProductCard';
+
 import { QUERY_ITEMS } from '../utils/queries';
+
 
 export default function ProductCategory(props) {
 
@@ -16,6 +18,7 @@ export default function ProductCategory(props) {
         });
     }
 
+
     return (
         <div>
             <p>{category.name}</p>
@@ -25,4 +28,3 @@ export default function ProductCategory(props) {
         </div>
     );
 
-}
