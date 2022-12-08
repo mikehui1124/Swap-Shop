@@ -18,6 +18,7 @@ export default function ProductCategory(props) {
     });
   }
 
+
   return (
     <div>
       <p>{category.name}</p>
@@ -25,3 +26,4 @@ export default function ProductCategory(props) {
     </div>
   );
 }
+
