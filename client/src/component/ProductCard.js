@@ -16,7 +16,8 @@ export default function ProductCard(props) {
         let tempauth=true;
         //check if it is login first
         //if (Auth.loggedIn())
-        if (tempauth){
+        console.log (Auth.loggedIn);
+        if (Auth.loggedIn() === true){
             //if yes go to swapProductForm
             console.log(product.name + product.owner.name);
             navigate("/SwapProduct",
