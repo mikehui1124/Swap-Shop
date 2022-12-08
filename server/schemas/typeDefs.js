@@ -43,6 +43,7 @@ const typeDefs = gql`
     items(category: ID, name: String): [Item]
     item(_id: ID!): Item
 
+    messages: [Message]
     messageSender(sender: ID): [Message]
     messageReceiver(receiver: ID): [Message]
     me: User    
@@ -61,6 +62,8 @@ const typeDefs = gql`
     changeItemOwner(_id: ID, owner: ID ): Item   
   
   }
+
+
 `;
 
 module.exports = typeDefs;

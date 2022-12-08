@@ -1,34 +1,59 @@
 import React, { Component } from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
+import Auth from "../utils/auth";
+import { useNavigate } from "react-router-dom";
 
-export default class ProductCard extends Component {
+export default function ProductCard(props) {
+    const {product} = props;
+    const navigate = useNavigate();
 
-    swapProduct = (e) => {
-        console.log('Swap the product:'+this.props.product.productName);
+    const swapProduct = (e) => {
+        console.log('Swap the product:'+product.name);
+        console.log('hardcode loggedIn');
+        console.log(product);
         //call graphQL with this.props.product
-    }
+        let tempauth=true;
+        //check if it is login first
+        //if (Auth.loggedIn())
+        if (tempauth){
+            //if yes go to swapProductForm
+            console.log(product.name + product.owner.name);
+            navigate("/SwapProduct",
+            {   
+                state: {
+                productId: product._id,
+                productName: product.name ,
+                productOwner: product.owner.name,
+                productOwnerId:product.owner._id,
+                }
+              });
+        }
+        else {
+            alert('Please login before swap product');
+        }
+        
+    };
 
-    render(){
-        return (
-            <Card>
-                <Image src={this.props.product.photos} wrapped ui={false} />
-                <Card.Content>
-                <Card.Header>Product Name:  {this.props.product.productName}</Card.Header>
-                <Card.Meta>
-                    <span className='date'></span>
-                </Card.Meta>
-                <Card.Description>
-                   Template Product Description:{this.props.product.description}
-                </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                <a>
-                    <Icon name='user' />
-                    Owner UserName :{this.props.product.userName}
-                </a>
-                </Card.Content>
-                <button onClick={this.swapProduct}>Swap this Product</button>
-            </Card>
-        )
-    }
-}
+    return (
+        <Card>
+            <Image src={'./images/' + product.image} wrapped ui={false} />
+            <Card.Content>
+            <Card.Header>Product Name:  {product.name}</Card.Header>
+            <Card.Meta>
+                <span className='date'></span>
+            </Card.Meta>
+            <Card.Description>
+                Template Product Description:{product.description}
+            </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+            <a>
+                <Icon name='user' />
+                Owner UserName :{product.owner.name}
+            </a>
+            </Card.Content>
+            <button onClick={swapProduct}>Swap this Product</button>
+        </Card>
+    )
+        
+} 

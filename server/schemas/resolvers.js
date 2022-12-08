@@ -29,6 +29,10 @@ const resolvers = {
 
     },
 
+    messages: async () => {
+      return await Message.find().populate('itemRequest').populate('itemOffer').populate('receiver');
+    },
+
     messageSender: async (parent, { _id }) => {
       return await Message.find({sender: _id}).populate('itemRequest').populate('itemOffer').populate('receiver');
 
@@ -109,8 +113,10 @@ const resolvers = {
     },
 
     addMessage: async (parent, args) => {
-          
+      console.log (args);    
       const message = await Message.create(args); 
+      console.log(message);
+      
       return message;      
     },
 
