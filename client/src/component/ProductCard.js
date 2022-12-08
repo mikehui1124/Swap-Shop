@@ -7,6 +7,7 @@ export default function ProductCard(props) {
     const {product} = props;
     const navigate = useNavigate();
 
+
     const swapProduct = (e) => {
         console.log('Swap the product:'+product.name);
         console.log('hardcode loggedIn');
@@ -33,6 +34,10 @@ export default function ProductCard(props) {
         }
         
     };
+
+    if(product.name == null){
+        return;
+    }
 
     return (
         <Card>

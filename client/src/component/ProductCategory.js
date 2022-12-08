@@ -28,3 +28,4 @@ export default function ProductCategory(props) {
         </div>
     );
 
+    }
