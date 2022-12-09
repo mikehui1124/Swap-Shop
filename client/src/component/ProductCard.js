@@ -13,7 +13,7 @@ export default function ProductCard(props) {
         console.log('hardcode loggedIn');
         console.log(product);
         //call graphQL with this.props.product
-        let tempauth=true;
+        //let tempauth=true;
         //check if it is login first
         //if (Auth.loggedIn())
         console.log (Auth.loggedIn);

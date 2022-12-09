@@ -41,7 +41,7 @@ export const ADD_ITEM = gql`
     $description: String
     ) {
     addItem(
-      name: $names,
+      name: $name,
       owner: $owner,
       category: $category,
       image: $image,
