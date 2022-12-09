@@ -30,15 +30,15 @@ const resolvers = {
     },
 
     messages: async () => {
-      return await Message.find().populate('itemRequest').populate('itemOffer').populate('receiver');
+      return await Message.find().populate('itemRequest').populate('itemOffer').populate('receiver').populate('sender');
     },
 
-    messageSender: async (parent, { _id }) => {
+    messageSender: async (parent,  {_id: _id} ) => {
       return await Message.find({sender: _id}).populate('itemRequest').populate('itemOffer').populate('receiver');
 
     },
 
-    messageReceiver: async (parent, { _id }) => {
+    messageReceiver: async (parent, { _id: _id }) => {
       return await Message.find({receiver: _id}).populate('itemRequest').populate('itemOffer').populate('sender');
 
     },

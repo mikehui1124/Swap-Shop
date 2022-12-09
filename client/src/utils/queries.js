@@ -59,6 +59,43 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_MESSAGES = gql`
+  {
+    messages {
+      _id
+      sender {
+        name
+        _id
+      }
+      receiver {
+        name
+        _id
+      }
+      itemRequest {
+        _id
+        name
+        image
+        description
+        category {
+          name
+        }      
+      }
+      itemOffer {
+        _id
+        name
+        image
+        description
+        category {
+          name
+        }
+      }
+      isClosed
+      isAgree
+    }
+  }
+`;
+
+
 export const QUERY_SENDER_MESSAGE = gql`
   query getSenders($sender: ID) {
     messageSender(sender: $sender) {
