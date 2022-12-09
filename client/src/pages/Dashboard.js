@@ -1,6 +1,7 @@
 import React from 'react';
 import ListedItem from '../component/ListedItem';
 import SwapHistory from '../component/SwapHistory';
+import MessagePanel from '../component/MessagePanel';
 import { useNavigate } from "react-router-dom";
 
 export default function DashBoard() {
@@ -8,6 +9,7 @@ export default function DashBoard() {
   return (
     <section>
       <h2>UserName, Welcome Back!</h2>
+      <MessagePanel></MessagePanel>
       
       <h3>Your Pass Swap Record</h3>
         <SwapHistory></SwapHistory>
