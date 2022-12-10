@@ -8,11 +8,8 @@ export default class ListedProductCard extends Component {
                 <Image src={this.props.product.photos} wrapped ui={false} />
                 <Card.Content>
                 <Card.Header>Product Name:  {this.props.product.productName}</Card.Header>
-                <Card.Meta>
-                    <span className='date'></span>
-                </Card.Meta>
                 <Card.Description>
-                   Template Product Description:{this.props.product.description}
+                   Product Description:{this.props.product.description}
                 </Card.Description>
                 </Card.Content>
             </Card>

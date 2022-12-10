@@ -54,10 +54,10 @@ export default function ProductCard(props) {
                 </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                <a>
+        
                     <Icon name='user' />
                     Owner :{product.owner.name}
-                </a>
+        
                 </Card.Content>
                 
                 <button onClick={swapProduct}>Swap this Product</button>

@@ -56,7 +56,10 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-     
+
+    users: async () => {
+      return await User.find();
+    },
   },
 
   Mutation: {
@@ -125,7 +128,6 @@ const resolvers = {
     },
 
     updateMessage: async (parent, args) => {
-            
       const editMessage = await Message.findByIdAndUpdate({_id: args._id},
         { isAgree: args.isAgree,
           isClosed: args.isClosed,

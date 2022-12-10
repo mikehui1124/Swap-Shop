@@ -47,6 +47,7 @@ function App() {
           <div id="mainBG">
             <Routes>
               <Route exact path="/" element={<Home />} />
+              <Route exact path="/Home" element={<Home />} />
               <Route exact path="/DashBoard" element={<DashBoard />} />
               <Route exact path="/SignUp" element={<SignUp />} />
               <Route exact path="/Login" element={<Login />} />
