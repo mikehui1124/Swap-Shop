@@ -1,6 +1,7 @@
 import React from 'react';
 import ListedItem from '../component/ListedItem';
 import SwapHistory from '../component/SwapHistory';
+import MessagePanel from '../component/MessagePanel';
 import { useNavigate } from "react-router-dom";
 import YourMessages from '../component/YourMessages';
 import {QUERY_ME } from '../utils/queries'
@@ -22,7 +23,11 @@ export default function DashBoard() {
   if (Auth.loggedIn()) {
   return (
     <section>
+
       <h2>{userName}, Welcome Back!</h2>
+
+
+   
 
       <h3>Your List Item</h3>
         <ListedItem></ListedItem>
