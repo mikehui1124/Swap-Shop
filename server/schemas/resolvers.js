@@ -38,8 +38,12 @@ const resolvers = {
 
     },
 
-    messageReceiver: async (parent, { _id: _id }) => {
-      return await Message.find({receiver: _id}).populate('itemRequest').populate('itemOffer').populate('sender');
+
+    messageReceiver: async (parent, { receiver }) => {
+      return await Message.find({receiver: receiver}).populate('itemRequest').populate('itemOffer').populate('sender');
+
+   
+
 
     },
 
