@@ -70,9 +70,6 @@ export default function AddProductForm (){
               //addItem(name: String, owner: ID, category: ID, image: String, description: String ): Item
               variables:{name: productName, owner: me, category:category, image: imageURL, description: description}
               });
-              console.log(mutationResponse);
-              console.log('Product Added');
-              alert('Product Added to system');
               window.location.assign('/DashBoard');
               
           } catch (e) {
