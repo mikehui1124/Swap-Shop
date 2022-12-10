@@ -129,33 +129,30 @@ export const QUERY_SENDER_MESSAGE = gql`
 `;
 
 export const QUERY_RECEIVER_MESSAGE = gql`
-  query getReceivers($receiver: ID) {
+  query MessageReceiver($receiver: ID) {
     messageReceiver(receiver: $receiver) {
       _id
+      sender {
+        _id
+        name
+      }
+      receiver {
+        _id
+        name
+      }
       itemRequest {
         _id
         name
-        description
         image
       }
       itemOffer {
         _id
         name
-        description
         image
+        description
       }
-      sender {
-        _id
-        name
-        email
-      }
-      receiver {        
-        name
-        email
-      }
-      isAgree
       isClosed
-      replyMessage          
+      isAgree
     }
   }
 `;
