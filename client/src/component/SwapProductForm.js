@@ -43,7 +43,7 @@ export default function SwapProductForm(props){
                     text: element.name,
                     value: element._id,
                     id: element._id,
-                    image: './images/'+element.image,
+                    image: element.image,
                   },
             );
         })
@@ -67,7 +67,7 @@ export default function SwapProductForm(props){
             console.log(mutationResponse);
             console.log('message sent');
             alert('message sent');
-            navigate("/");
+            window.location.assign('/');
             
         } catch (e) {
           console.log(e);

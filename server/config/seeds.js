@@ -1,7 +1,9 @@
 const db = require("./connection");
-const { User, Item, Category } = require("../models");
+const { User, Item, Category, Message } = require("../models");
 
 db.once("open", async () => {
+  await Message.deleteMany();
+
   await Category.deleteMany();
 
   const categories = await Category.create([
@@ -57,7 +59,7 @@ db.once("open", async () => {
       name: "Air Fryer",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-      image: "air-fryer.jpg",
+      image: "./images/air-fryer.jpg",
       owner: users[0]._id,
       category: categories[0]._id
       
@@ -66,7 +68,7 @@ db.once("open", async () => {
       name: "Bag of Vegetables",
       description:
         "Praesent sed lacinia mauris. Nulla congue nibh magna, at feugiat nunc scelerisque quis. Donec iaculis rutrum vulputate. Suspendisse lectus sem, vulputate ac lectus sed, placerat consequat dui.",
-      image: "bag-of-veg.jpg",
+      image: "./images/bag-of-veg.jpg",
       owner: users[1]._id,
       category: categories[0]._id
       
@@ -75,7 +77,7 @@ db.once("open", async () => {
       name: "Bedding sheets",
       description:
         "Donec volutpat erat erat, sit amet gravida justo sodales in. Phasellus tempus euismod urna. Proin ultrices nisi ut ipsum congue, vitae porttitor libero suscipit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam lacinia a nisi non congue.",
-      image: "bedding-sheets.jpg",
+      image: "./images/bedding-sheets.jpg",
       owner: users[2]._id,
       category: categories[0]._id,
       
@@ -84,7 +86,7 @@ db.once("open", async () => {
       name: "Bench",
       description:
         "Praesent placerat, odio vel euismod venenatis, lectus arcu laoreet felis, et fringilla sapien turpis vestibulum nisl.",
-      image: "bench.jpg",
+      image: "./images/bench.jpg",
       owner: users[0]._id,
       category: categories[0]._id
       
@@ -93,7 +95,7 @@ db.once("open", async () => {
       name: "Electric Generator",
       description:
         "Vivamus ut turpis in purus pretium mollis. Donec turpis odio, semper vel interdum ut, vulputate at ex. Duis dignissim nisi vel tortor imperdiet finibus. Aenean aliquam sagittis rutrum.",
-      image: "electric-generator.jpg",
+      image: "./images/electric-generator.jpg",
       owner: users[1]._id,
       category: categories[2]._id,      
     },
@@ -101,7 +103,7 @@ db.once("open", async () => {
       name: "Electrical test equipment",
       description:
         "Vestibulum risus metus, luctus non tortor quis, tincidunt consectetur ex. Nullam vitae lobortis ligula, ut sagittis massa. Curabitur consectetur, tellus at pulvinar venenatis, erat augue cursus erat, eu ullamcorper eros lectus ultrices ipsum. Integer rutrum, augue vitae auctor venenatis, turpis turpis elementum orci, at sagittis risus mi a leo.",
-      image: "electrical-test-equipment.jpg",
+      image: "./images/electrical-test-equipment.jpg",
       owner: users[2]._id,
       category: categories[2]._id
       
@@ -110,7 +112,7 @@ db.once("open", async () => {
       name: "Headphones",
       description:
         "In sodales, ipsum quis ultricies porttitor, tellus urna aliquam arcu, eget venenatis purus ligula ut nisi. Fusce ut felis dolor. Mauris justo ante, aliquet non tempus in, tempus ac lorem. Aliquam lacinia dolor eu sem eleifend ultrices. Etiam mattis metus metus. Sed ligula dui, placerat non turpis vitae, suscipit volutpat elit. Phasellus sagittis, diam elementum suscipit fringilla, libero mauris scelerisque ex, ac interdum diam erat non sapien.",
-      image: "headphones.jpg",
+      image: "./images/headphones.jpg",
       owner: users[0]._id,
       category: categories[1]._id,      
     },
@@ -118,7 +120,7 @@ db.once("open", async () => {
       name: "Kettle",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ornare diam quis eleifend rutrum. Aliquam nulla est, volutpat non enim nec, pharetra gravida augue. Donec vitae dictum neque. Pellentesque arcu lorem, fringilla non ligula ac, tristique bibendum erat. Ut a semper nibh. Quisque a mi et mi tempor ultricies. Maecenas eu ipsum eu enim hendrerit accumsan at euismod urna.",
-      image: "kettle.jpg",
+      image: "./images/kettle.jpg",
       owner: users[1]._id,
       category: categories[0]._id,      
     },
@@ -126,7 +128,7 @@ db.once("open", async () => {
       name: "Microwave",
       description:
         "Ut vulputate hendrerit nibh, a placerat elit cursus interdum.",
-      image: "microwave.jpg",
+      image: "./images/microwave.jpg",
       owner: users[2]._id,
       category: categories[0]._id
     },
@@ -134,7 +136,7 @@ db.once("open", async () => {
       name: "Kitchen Mixer",
       description:
         "Sed a mauris condimentum, elementum enim in, rhoncus dui. Phasellus lobortis leo odio, sit amet pharetra turpis porta quis.",
-      image: "kitchen-mixer.jpg",
+      image: "./images/kitchen-mixer.jpg",
       owner: users[0]._id,
       category: categories[0]._id
     },
@@ -142,7 +144,7 @@ db.once("open", async () => {
       name: "Mobile phone",
       description:
         "Vestibulum et erat finibus erat suscipit vulputate sed vitae dui. Ut laoreet tellus sit amet justo bibendum ultrices. Donec vitae felis vestibulum, congue augue eu, finibus turpis.",
-      image: "mobile-phone.jpg",
+      image: "./images/mobile-phone.jpg",
       owner: users[1]._id,
       category: categories[1]._id
     },
@@ -150,7 +152,7 @@ db.once("open", async () => {
       name: "Mug and coaster",
       description:
         "Morbi consectetur viverra urna, eu fringilla turpis faucibus sit amet. Suspendisse potenti. Donec at dui ac sapien eleifend hendrerit vel sit amet lectus.",
-      image: "mug-and-coaster.jpg",
+      image: "./images/mug-and-coaster.jpg",
       owner: users[2]._id,
       category: categories[0]._id
     },
@@ -158,7 +160,7 @@ db.once("open", async () => {
       name: "Office desk",
       description:
         "Vestibulum et erat finibus erat suscipit vulputate sed vitae dui. Ut laoreet tellus sit amet justo bibendum ultrices. Donec vitae felis vestibulum, congue augue eu, finibus turpis.",
-      image: "office-desk.jpg",
+      image: "./images/office-desk.jpg",
       owner: users[0]._id,
       category: categories[0]._id
     },
@@ -166,7 +168,7 @@ db.once("open", async () => {
       name: "Power strip",
       description:
         "Sed a mauris condimentum, elementum enim in, rhoncus dui. Phasellus lobortis leo odio, sit amet pharetra turpis porta quis.",
-      image: "power-strip.jpg",
+      image: "./images/power-strip.jpg",
       owner: users[1]._id,
       category: categories[2]._id
     },
@@ -174,7 +176,7 @@ db.once("open", async () => {
       name: "Sofa",
       description:
         "Ut vulputate hendrerit nibh, a placerat elit cursus interdum.",
-      image: "sofa.jpg",
+      image: "./images/sofa.jpg",
       owner: users[2]._id,
       category: categories[0]._id      
     },
@@ -182,7 +184,7 @@ db.once("open", async () => {
       name: "Table and chairs",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ornare diam quis eleifend rutrum. Aliquam nulla est, volutpat non enim nec, pharetra gravida augue. Donec vitae dictum neque. Pellentesque arcu lorem, fringilla non ligula ac, tristique bibendum erat. Ut a semper nibh. Quisque a mi et mi tempor ultricies. Maecenas eu ipsum eu enim hendrerit accumsan at euismod urna.",
-      image: "table-and-chairs.jpg",
+      image: "./images/table-and-chairs.jpg",
       owner: users[0]._id,
       category: categories[0]._id
     },
@@ -190,7 +192,7 @@ db.once("open", async () => {
       name: "Tablet and mobile",
       description:
         "Praesent placerat, odio vel euismod venenatis, lectus arcu laoreet felis, et fringilla sapien turpis vestibulum nisl.",
-      image: "tablet-and-mobile.jpg",
+      image: "./images/tablet-and-mobile.jpg",
       owner: users[1]._id,
       category: categories[1]._id
     },
@@ -198,7 +200,7 @@ db.once("open", async () => {
       name: "Usb stick",
       description:
         "Sed a mauris condimentum, elementum enim in, rhoncus dui. Phasellus lobortis leo odio, sit amet pharetra turpis porta quis.",
-      image: "usb-stick.jpg",
+      image: "./images/usb-stick.jpg",
       owner: users[2]._id,
       category: categories[1]._id
     },
@@ -206,7 +208,7 @@ db.once("open", async () => {
       name: "White microwave",
       description:
         "Ut vulputate hendrerit nibh, a placerat elit cursus interdum.",
-      image: "white-microwave.jpg",
+      image: "./images/white-microwave.jpg",
       owner: users[0]._id,
       category: categories[2]._id
     },
@@ -214,7 +216,7 @@ db.once("open", async () => {
       name: "Wireless mouse",
       description:
         "Vestibulum et erat finibus erat suscipit vulputate sed vitae dui. Ut laoreet tellus sit amet justo bibendum ultrices. Donec vitae felis vestibulum, congue augue eu, finibus turpis.",
-      image: "wireless-mouse.jpg",
+      image: "./images/wireless-mouse.jpg",
       owner: users[1]._id,
       category: categories[2]._id
     },

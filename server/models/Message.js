@@ -5,22 +5,22 @@ const { Schema } = mongoose;
 const messageSchema = new Schema({
   itemRequest: {
       type: Schema.Types.ObjectId,
-      ref: 'item',
+      ref: 'Item',
       required: true
   },
   itemOffer: {
       type: Schema.Types.ObjectId,
-      ref: 'item',
+      ref: 'Item',
       required: true
   },
   sender: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
       required: true
   },
   receiver: {
       type: Schema.Types.ObjectId,
-      ref: 'user'
+      ref: 'User'
   },
   isAgree: {
     type: Boolean,

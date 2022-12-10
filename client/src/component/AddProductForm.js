@@ -73,7 +73,7 @@ export default function AddProductForm (){
               console.log(mutationResponse);
               console.log('Product Added');
               alert('Product Added to system');
-              //navigate("/");
+              window.location.assign('/DashBoard');
               
           } catch (e) {
             console.log(e);

@@ -17,7 +17,7 @@ export default function ProductCard(props) {
         //check if it is login first
         //if (Auth.loggedIn())
         console.log (Auth.loggedIn);
-        if (Auth.loggedIn() === true){
+        if (Auth.loggedIn()){
             //if yes go to swapProductForm
             console.log(product.name + product.owner.name);
             navigate("/SwapProduct",
@@ -40,26 +40,30 @@ export default function ProductCard(props) {
         return;
     }
 
-    return (
-        <Card>
-            <Image src={'./images/' + product.image} wrapped ui={false} />
-            <Card.Content>
-            <Card.Header>Product Name:  {product.name}</Card.Header>
-            <Card.Meta>
-                <span className='date'></span>
-            </Card.Meta>
-            <Card.Description>
-                Template Product Description:{product.description}
-            </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-            <a>
-                <Icon name='user' />
-                Owner UserName :{product.owner.name}
-            </a>
-            </Card.Content>
-            <button onClick={swapProduct}>Swap this Product</button>
-        </Card>
-    )
+
+        return (
+            <Card>
+                <Image src={product.image} wrapped ui={false} />
+                <Card.Content>
+                <Card.Header>Product Name:  {product.name}</Card.Header>
+                <Card.Meta>
+                    <span className='date'></span>
+                </Card.Meta>
+                <Card.Description>
+                    Product Description:{product.description}
+                </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                <a>
+                    <Icon name='user' />
+                    Owner :{product.owner.name}
+                </a>
+                </Card.Content>
+                
+                <button onClick={swapProduct}>Swap this Product</button>
+            </Card>
+        )
+
+
         
 } 
