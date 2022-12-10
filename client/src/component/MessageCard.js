@@ -8,8 +8,6 @@ export default function MessageCard(props) {
     const [changeItemOwner] = useMutation(CHANGE_ITEM_OWNER);
     const [updateMessage] = useMutation(UPDATE_MESSAGE);
 
-    console.log(swapData);
-
     //handle submit
     const handleApprove = async (event) => {
       event.preventDefault();
@@ -28,28 +26,19 @@ export default function MessageCard(props) {
         console.log(e);
       }
       window.location.assign('/DashBoard');
-
     }
 
     const handleDecline = async (event) => {
       event.preventDefault();
-      //updateMessage(_id: $_id, isAgree: $isAgree, isClosed: $isClosed, replyMessage: $replyMessage )
       try {
         const mutationResponse4 = await updateMessage({
           variables:{_id: swapData._id, isAgree:false ,isClosed:true,replyMessage:""}
         });
-        console.log(mutationResponse4);        
-        console.log('message sent');
-        alert('message sent');             
       } catch (e) {
         console.log(e);
       }
       window.location.assign('/DashBoard');
     }
-
-
-    
-
 
     var approvalPanel = (
       <div className='ui two buttons'>
@@ -62,7 +51,6 @@ export default function MessageCard(props) {
       </div>
     );
   
-    
     if(swapData && swapData.isClosed){
       approvalPanel = swapData.isAgree?(
         <div>This swap request is approved</div>
@@ -71,7 +59,6 @@ export default function MessageCard(props) {
       );
     }
     
-
     return (
         <Card>
           <Card.Content>
@@ -98,6 +85,5 @@ export default function MessageCard(props) {
             {approvalPanel}
           </Card.Content>
         </Card>
-
-    )
+    );
 }
