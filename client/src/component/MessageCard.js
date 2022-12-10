@@ -28,28 +28,19 @@ export default function MessageCard(props) {
         console.log(e);
       }
       window.location.assign('/DashBoard');
-
     }
 
     const handleDecline = async (event) => {
       event.preventDefault();
-      //updateMessage(_id: $_id, isAgree: $isAgree, isClosed: $isClosed, replyMessage: $replyMessage )
       try {
         const mutationResponse4 = await updateMessage({
           variables:{_id: swapData._id, isAgree:false ,isClosed:true,replyMessage:""}
         });
-        console.log(mutationResponse4);        
-        console.log('message sent');
-        alert('message sent');             
       } catch (e) {
         console.log(e);
       }
       window.location.assign('/DashBoard');
     }
-
-
-    
-
 
     var approvalPanel = (
       <div className='ui two buttons'>
@@ -61,7 +52,6 @@ export default function MessageCard(props) {
         </Button>
       </div>
     );
-  
     
     if(swapData && swapData.isClosed){
       approvalPanel = swapData.isAgree?(
@@ -70,7 +60,6 @@ export default function MessageCard(props) {
         <div>This swap request is declined.</div>
       );
     }
-    
 
     return (
         <Card>
