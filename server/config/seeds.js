@@ -103,7 +103,7 @@ db.once("open", async () => {
       name: "Electrical test equipment",
       description:
         "Vestibulum risus metus, luctus non tortor quis, tincidunt consectetur ex. Nullam vitae lobortis ligula, ut sagittis massa. Curabitur consectetur, tellus at pulvinar venenatis, erat augue cursus erat, eu ullamcorper eros lectus ultrices ipsum. Integer rutrum, augue vitae auctor venenatis, turpis turpis elementum orci, at sagittis risus mi a leo.",
-      image: "./images/electrical-test-equipment.jpg",
+      image: "./images/electrical-test-equpment.jpg",
       owner: users[2]._id,
       category: categories[2]._id
       
