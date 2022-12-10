@@ -14,8 +14,10 @@ export default function DashBoard() {
 
   const { loading:loading1 , error:error1, data:data1 } = useQuery(QUERY_ME);
   var userName;
+  var yourMessages = [];
   if (data1){
     userName = data1.me.name;
+    yourMessages.push(<YourMessages key="yourMessages" userId={data1.me._id}/>);
   };
   console.log('The current user is' + userName);
   
@@ -33,7 +35,7 @@ export default function DashBoard() {
         <ListedItem></ListedItem>
 
       <h3>Your Message</h3>
-      <YourMessages/>
+      {yourMessages}
 
       <h3>Add New Swap Item</h3> 
       <button onClick={() => navigate("/AddProduct")}>Add new Product</button>

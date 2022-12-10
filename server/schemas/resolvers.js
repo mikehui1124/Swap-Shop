@@ -30,21 +30,17 @@ const resolvers = {
     },
 
     messages: async () => {
-      return await Message.find().populate('itemRequest').populate('itemOffer').populate('receiver').populate('sender');
+      return await Message.find().populate('itemRequest').populate('itemOffer').populate('receiver');
     },
 
-    messageSender: async (parent,  {_id: _id} ) => {
-      return await Message.find({sender: _id}).populate('itemRequest').populate('itemOffer').populate('receiver');
+    messageSender: async (parent, { sender }) => {
+      return await Message.find({sender: sender}).populate('itemRequest').populate('itemOffer').populate('receiver');
 
     },
-
 
     messageReceiver: async (parent, { receiver }) => {
+      console.log("called messageReceiver:"+receiver);
       return await Message.find({receiver: receiver}).populate('itemRequest').populate('itemOffer').populate('sender');
-
-   
-
-
     },
 
     me: async (parent, args, context) => {
