@@ -11,38 +11,29 @@ import Auth from "../utils/auth";
 export default function DashBoard() {
   const navigate = useNavigate();
 
-  const { loading:loading1 , error:error1, data:data1 } = useQuery(QUERY_ME);
-  var userName;
-  var yourMessages = [];
-  if (data1){
-    userName = data1.me.name;
-    yourMessages.push(<YourMessages key="yourMessages" userId={data1.me._id}/>);
-  };
-  console.log('The current user is' + userName);
+  const { loading , error, data } = useQuery(QUERY_ME);
   
-
   if (Auth.loggedIn()) {
-  return (
-    <section>
-      <h2>{userName}, Welcome Back!</h2>
-
-      <h3>Your List Item</h3>
-        <ListedItem></ListedItem>
-
-      <h3>Your Message</h3>
-      {yourMessages}
-
-      <h3>Add New Swap Item</h3> 
-      <button onClick={() => navigate("/AddProduct")}>Add new Product</button>
-    </section>
-
-  );}
-
-  else{
+    var userName = Auth.getProfile().data.name;
     return (
-      <h2> Please login to view your Dashboard</h2>
-    )
+      <section>
+        <h2>{userName}, Welcome Back!</h2>
+
+        <h3>Your List Item</h3>
+        <ListedItem key="listItems" />
+        <h3>Your Message</h3>
+        <YourMessages key="yourMessages"/>
+
+        <h3>New Swap Item</h3> 
+        <button onClick={() => navigate("/AddProduct")}>Add new Product</button>
+      </section>
+
+    );
   }
+
+  return (
+    <h2> Please login to view your Dashboard</h2>
+  );
 }
 
 /*

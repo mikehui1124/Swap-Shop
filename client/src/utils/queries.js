@@ -112,7 +112,8 @@ export const QUERY_RECEIVER_MESSAGE = gql`
         name
         email
       }
-      receiver {        
+      receiver {      
+        _id  
         name
         email
       }

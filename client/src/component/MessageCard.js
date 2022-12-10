@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Card, Icon, Image, Button } from 'semantic-ui-react';
+import React from 'react';
+import { Card, Image, Button } from 'semantic-ui-react';
 import {CHANGE_ITEM_OWNER, UPDATE_MESSAGE} from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 

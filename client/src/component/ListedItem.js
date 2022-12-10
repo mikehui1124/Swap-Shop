@@ -1,39 +1,42 @@
-import React, { Component } from 'react';
-import { Card, Icon, Image } from 'semantic-ui-react'
+import React from 'react';
+import { Card } from 'semantic-ui-react'
 import ListedProductCard from './ListedProductCard';
+import { QUERY_ALL_ITEMS} from '../utils/queries'
+import { useQuery } from '@apollo/client';
+import Auth from "../utils/auth";
 
-export default class ListedItem extends Component {
+export default function ListedItem () {
 
-    renderYourProductCard(currentProduct){
-        return  <ListedProductCard key={currentProduct.key} product={currentProduct}></ListedProductCard>;
-    }
-
-    render() {
-        const products=[{
-            key: "1",
-            productName:"I-phone",
-            description:'It is a brand-new Iphone 6',
-            photos:'./assets/smartphone-call.png'
-            },
-            {
-            key: "2",
-            productName:"Printer",
-            description:'This is fully functional colour printer',
-            photos:'./assets/Product2.jpeg'  
-        }];
-
-        let cards = [];
-        products.forEach(item => {
-            cards.push(this.renderYourProductCard(item));
-        });
-
-        return (
-            <div>
-                <p>{this.props.categoryName}</p>
-                <Card.Group>
-                {cards}
-                </Card.Group>
-            </div>
+    var userId = Auth.getProfile().data._id;
+    const { loading, error, data } = useQuery(QUERY_ALL_ITEMS);
+    var products=[];
+    if (data){
+        var filteredItems = data.items.filter(
+            (product) => product.owner._id === userId
         );
+        filteredItems.forEach(element => {
+            products.push(
+                {
+                    key: element._id,
+                    productName: element.name,
+                    description: element.description,
+                    photos: element.image,
+                  },
+            );
+        })
     }
+  
+    let cards = [];
+    products.forEach(item => {
+        cards.push(<ListedProductCard key={item.key} product={item} />);
+    });
+
+    return (
+        <div>
+            <Card.Group>
+            {cards}
+            </Card.Group>
+        </div>
+    );
+    
 }

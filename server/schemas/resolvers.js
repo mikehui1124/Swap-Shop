@@ -52,7 +52,10 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-     
+
+    users: async () => {
+      return await User.find();
+    },
   },
 
   Mutation: {
