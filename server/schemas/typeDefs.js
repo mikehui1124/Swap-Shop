@@ -47,7 +47,7 @@ const typeDefs = gql`
     messageSender(sender: ID): [Message]
     messageReceiver(receiver: ID): [Message]
     me: User    
-   
+    users: [User]
   }
 
   type Mutation {

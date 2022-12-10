@@ -33,7 +33,7 @@ export default class Nav extends Component {
           active={activeItem === "Dashboard"}
           onClick={this.handleItemClick}
         >
-          DashBoard
+          Dashboard
         </Menu.Item>
 
         <Menu.Item

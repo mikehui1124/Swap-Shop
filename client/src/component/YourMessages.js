@@ -1,55 +1,24 @@
-import React, { Component } from 'react';
-import { Card, Icon, Image } from 'semantic-ui-react'
+import React from 'react';
+import { Card} from 'semantic-ui-react'
 import MessageCard from './MessageCard';
 import { QUERY_RECEIVER_MESSAGE, QUERY_ME } from '../utils/queries'
 import { useQuery } from '@apollo/client';
+import Auth from "../utils/auth";
 
-export default function YourMessages(props) {
-    const {userId} = props;
-
-    const renderYourMessageCard=(currentProduct)=>{
-        //console.log(currentProduct);
-        return  <MessageCard key={currentProduct.key} swapData={currentProduct}></MessageCard>;        
-    }
+export default function YourMessages() {
 
     //QUERY_RECEIVER_MESSAGE
+    var meId = Auth.getProfile().data._id;
     const { loading, error, data} = useQuery(QUERY_RECEIVER_MESSAGE,{
-        variables: {receiver: userId}
+        variables: {receiver: meId}
     });
     let cards = [];
 
     if(data){
-        console.log(data);
         data.messageReceiver.forEach((item) => {
             cards.push(<MessageCard key={item._id} swapData={item}></MessageCard>);
-        });
-    
+        });    
     }
-
-           
-    /*
-    const products=[{
-        key: "1",
-        YproductName:"air-fyer",
-        YproductImage:"./images/air-fyer.jpg",
-        senderName:"TestingName:",
-        SproductName:"mobile-phone",
-        SproductImage:"./images/mobile-phone.jpg",
-        SproductDescipt:'It is a brand-new Iphone 6',
-    },
-    {
-        key: "2",
-        YproductName:"sofa",
-        YproductImage:"./images/sofa.jpg",
-        senderName:"TestingName:",
-        SproductName:"mobile-phone",
-        SproductImage:"./images/mobile-phone.jpg",
-        SproductDescipt:'It is a brand-new Iphone 6',  
-    }];
-    products.forEach(item => {
-        cards.push(renderYourMessageCard(item));
-    });
-    */
 
     return (
         <div>
